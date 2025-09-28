@@ -141,25 +141,7 @@ src/
 ./gradlew test --info
 ```
 
-## Troubleshooting
-
-### Common Issues
-
-1. **Java Version**: Ensure Java 17+ is used
-   ```bash
-   export JAVA_HOME=/opt/homebrew/opt/openjdk@17
-   ```
-
-2. **Port Conflicts**: Embedded Kafka uses random ports, conflicts are rare
-
-3. **Memory Issues**: Increase heap size if needed
-   ```bash
-   ./gradlew test -Dorg.gradle.jvmargs="-Xmx2g"
-   ```
-
-4. **Timeout Issues**: Test has 10-second timeout, increase if needed
-
-### Verification
+### Additional manual verification
 
 After running tests, check the Iceberg table:
 
@@ -170,13 +152,6 @@ ls -la build/iceberg-kafka-output/default_database/kafka_messages/
 # View table metadata
 find build/iceberg-kafka-output -name "*.avro" -o -name "*.parquet" -o -name "*.json"
 ```
-
-## Contributing
-
-1. Follow Java coding standards
-2. Add JavaDoc for all public methods
-3. Write tests for new functionality
-4. Update README for significant changes
 
 ## License
 
@@ -205,3 +180,20 @@ Since Flink doesn't automatically manage manifest files like Spark does, it's **
 - **[MergeAppend.java](https://github.com/apache/iceberg/blob/main/core/src/main/java/org/apache/iceberg/MergeAppend.java#L24)** - Performs manifest merging during write operations
 
 
+## Troubleshooting
+
+### Common Issues
+
+1. **Java Version**: Ensure Java 17+ is used
+   ```bash
+   export JAVA_HOME=/opt/homebrew/opt/openjdk@17
+   ```
+
+2. **Port Conflicts**: Embedded Kafka uses random ports, conflicts are rare
+
+3. **Memory Issues**: Increase heap size if needed
+   ```bash
+   ./gradlew test -Dorg.gradle.jvmargs="-Xmx2g"
+   ```
+
+4. **Timeout Issues**: Test has 10-second timeout, increase if needed
