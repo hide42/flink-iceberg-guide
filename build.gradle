@@ -1,0 +1,90 @@
+plugins {
+    id 'java'
+    id 'application'
+}
+
+group = 'org.example'
+version = '1.0-SNAPSHOT'
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_17
+    targetCompatibility = JavaVersion.VERSION_17
+}
+
+repositories {
+    mavenCentral()
+    maven {
+        url = "https://packages.confluent.io/maven"
+    }
+    maven {
+        url = "https://repository.apache.org/snapshots"
+    }
+}
+
+ext {
+    flinkShortVersion = "1.19"
+    flinkVersion = "1.19.1"
+    hadoopVersion = "3.4.0"
+}
+
+
+dependencies {
+    implementation 'com.google.code.gson:gson:2.13.1'
+    implementation "org.apache.flink:flink-avro:${flinkVersion}"
+    implementation "org.apache.flink:flink-clients:${flinkVersion}"
+    implementation "org.apache.flink:flink-connector-base:${flinkVersion}"
+    implementation "org.apache.flink:flink-connector-kafka:3.3.0-${flinkShortVersion}"
+    implementation "org.apache.flink:flink-json:${flinkVersion}"
+    implementation "org.apache.flink:flink-runtime-web:${flinkVersion}"
+    implementation("org.apache.flink:flink-table-api-java:${flinkVersion}")
+    implementation("org.apache.flink:flink-table-api-java-bridge:${flinkVersion}")
+    implementation("org.apache.flink:flink-table-planner_2.12:${flinkVersion}")
+    implementation("org.scala-lang:scala-library:2.12.18")
+    implementation "org.apache.hadoop:hadoop-common:${hadoopVersion}"
+    implementation("org.apache.hadoop:hadoop-hdfs-client:${hadoopVersion}")
+    implementation("org.apache.hadoop:hadoop-mapreduce-client-core:${hadoopVersion}")
+    implementation("org.apache.iceberg:iceberg-aws-bundle:1.9.1")
+    implementation("org.apache.iceberg:iceberg-flink-runtime-1.19:1.9.1")
+    implementation("org.apache.iceberg:iceberg-flink:1.9.1")
+    implementation "org.slf4j:slf4j-simple:2.0.13"
+
+    testImplementation platform('org.junit:junit-bom:5.10.0')
+    testImplementation 'org.junit.jupiter:junit-jupiter'
+    testImplementation 'ch.qos.logback:logback-classic:1.4.14'
+    testImplementation 'org.springframework.kafka:spring-kafka-test:3.1.0'
+    testImplementation 'org.apache.kafka:kafka-clients:3.4.0'
+}
+
+test {
+    useJUnitPlatform()
+    jvmArgs = [
+        '--add-opens', 'java.base/java.util=ALL-UNNAMED',
+        '--add-opens', 'java.base/java.lang=ALL-UNNAMED',
+        '--add-opens', 'java.base/java.lang.reflect=ALL-UNNAMED',
+        '--add-opens', 'java.base/java.text=ALL-UNNAMED',
+        '--add-opens', 'java.base/java.nio=ALL-UNNAMED',
+        '--add-opens', 'java.base/sun.nio.ch=ALL-UNNAMED',
+        '--add-opens', 'java.base/java.net=ALL-UNNAMED',
+        '--add-opens', 'java.base/java.io=ALL-UNNAMED',
+        '--add-opens', 'java.desktop/java.awt.font=ALL-UNNAMED'
+    ]
+}
+
+application {
+    mainClass = 'org.example.Main'
+}
+
+run {
+    standardInput = System.in
+    jvmArgs = [
+        '--add-opens', 'java.base/java.util=ALL-UNNAMED',
+        '--add-opens', 'java.base/java.lang=ALL-UNNAMED',
+        '--add-opens', 'java.base/java.lang.reflect=ALL-UNNAMED',
+        '--add-opens', 'java.base/java.text=ALL-UNNAMED',
+        '--add-opens', 'java.base/java.nio=ALL-UNNAMED',
+        '--add-opens', 'java.base/sun.nio.ch=ALL-UNNAMED',
+        '--add-opens', 'java.base/java.net=ALL-UNNAMED',
+        '--add-opens', 'java.base/java.io=ALL-UNNAMED',
+        '--add-opens', 'java.desktop/java.awt.font=ALL-UNNAMED'
+    ]
+}
